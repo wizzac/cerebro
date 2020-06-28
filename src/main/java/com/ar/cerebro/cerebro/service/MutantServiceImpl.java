@@ -46,15 +46,17 @@ public class MutantServiceImpl implements MutantService {
         workers.add(horizontalThread);
         workers.add(verticalThread);
 //        workers.add(leftDiagnoalThread);
-//        workers.add(rightDiagonalThread);
+        workers.add(rightDiagonalThread);
+        Boolean fut = rightDiagonalThread.call();
 
-        workers.forEach(x-> {
-            try {
-                x.call();
-            } catch (Exception e) {
-                throw new CustomForbiddenException("");
-            }
-        });
+
+//        workers.forEach(x-> {
+//            try {
+//                x.call();
+//            } catch (Exception e) {
+//                throw new CustomForbiddenException("");
+//            }
+//        });
 
     //    countDownLatch.await();
 
