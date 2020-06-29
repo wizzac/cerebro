@@ -18,4 +18,6 @@ public class Mutant {
 
     private boolean isMutant;
 
+    private Integer hashCode;
+
 }

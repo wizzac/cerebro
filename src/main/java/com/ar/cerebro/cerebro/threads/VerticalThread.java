@@ -8,7 +8,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 
 @AllArgsConstructor
-public class VerticalThread extends Thread implements Validable, Callable<Boolean> {
+public class VerticalThread implements Validable, Callable<Boolean> {
 
 
     private List<String> dna;
@@ -22,38 +22,34 @@ public class VerticalThread extends Thread implements Validable, Callable<Boolea
 
         Integer size=dna.size();
 
-        if(size < countToValidate){
-            throw new CustomForbiddenException("No hay suficiente adn para validar");
+        try{
+            for (int i = 0; i < size; i++) {
+
+                int consecutives=0;
+                String current="";
+
+                for(int j = 0 ; j < dna.get(i).length();j++){
+
+                    String[] row=dna.get(j).split("");
+
+
+                    if(current.equals(row[i])){
+                        consecutives++;
+                    }else{
+                        consecutives=1;
+                        current=row[i];
+                    }
+
+                    if(consecutives==countToValidate){
+                        return true;
+                    }
+
+                }
+            };
+        }catch (Exception ex){
+            countDownLatch.countDown();
+            throw ex;
         }
-
-
-        for (int i = 0; i < dna.size(); i++) {
-
-            int consecutives=0;
-            String current="";
-
-            for(int j = 0 ; j < dna.get(i).length();j++){
-
-                String[] row=dna.get(j).split("");
-
-                if(!validLetters.contains(row[j])) {
-                    throw new CustomForbiddenException("Este adn es demasiado mutante");
-                }
-
-                if(current.equals(row[i])){
-                    consecutives++;
-                }else{
-                    consecutives=1;
-                    current=row[i];
-                }
-
-                if(consecutives==countToValidate){
-                    return true;
-                }
-
-            }
-        };
-
 
         return false;
     }

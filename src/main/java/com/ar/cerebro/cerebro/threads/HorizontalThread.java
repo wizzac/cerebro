@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 
-public class HorizontalThread extends Thread implements Validable,Callable<Boolean> {
+public class HorizontalThread implements Validable,Callable<Boolean> {
 
 
     private List<String> dna;
@@ -31,39 +31,38 @@ public class HorizontalThread extends Thread implements Validable,Callable<Boole
 
         Integer size=dna.size();
 
-        if(size < countToValidate){
-            throw new CustomForbiddenException("No hay sificiente adn para validar");
-        }
+        try {
 
-        dna.forEach( x ->{
-            int consecutives=0;
-            String current="";
-            String[] asArray=x.split("");
-            for (int i = 0; i < x.length(); i++) {
+            for (int x = 0; x < size; x++) {
+                int consecutives = 0;
+                String current = "";
+                String[] asArray = dna.get(x).split("");
 
-                if(!validLetters.contains(current)){
-                    throw new CustomForbiddenException("Esta cadena de adn es demasiado mutante");
-                }
+                for (int i = 0; i < dna.get(x).length(); i++) {
 
-                if(current.equals(asArray[i])){
-                    consecutives++;
-                }else{
-                    current=asArray[i];
-                    consecutives=1;
-                }
+                    if (current.equals(asArray[i])) {
+                        consecutives++;
+                    } else {
+                        current = asArray[i];
+                        consecutives = 1;
+                    }
 
-                // cortar aca ejecucion si hay N letras iguales validas
+                    // cortar aca ejecucion si hay N letras iguales validas
 
-                if(consecutives == countToValidate){
-                    countDownLatch.countDown();
+                    if (consecutives == countToValidate) {
+                        countDownLatch.countDown();
+                        return true;
+                    }
+
                 }
 
             }
+        }catch (Exception ex){
+            countDownLatch.countDown();
+            throw ex;
+        }
 
-        });
-
-
-        return true;
+        return false;
     }
 
 
