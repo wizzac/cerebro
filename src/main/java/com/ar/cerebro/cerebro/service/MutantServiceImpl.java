@@ -9,6 +9,7 @@ import com.ar.cerebro.cerebro.threads.HorizontalThread;
 import com.ar.cerebro.cerebro.threads.LeftDiagnoalThread;
 import com.ar.cerebro.cerebro.threads.RightDiagonalThread;
 import com.ar.cerebro.cerebro.threads.VerticalThread;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,7 +33,6 @@ public class MutantServiceImpl implements MutantService {
     public boolean isMutant(MutantDto mutant) throws Exception {
 
 
-
         Config letters = configService.getConfigByCode("VALID_LETTERS");
         Config countToValidateConfig=configService.getConfigByCode("VALIDATE_COUNT");
         List<String> validLetters= Arrays.asList(letters.getValue().split(","));
@@ -51,27 +51,48 @@ public class MutantServiceImpl implements MutantService {
         if(duplicate==null) {
 
             ExecutorService executorService = Executors.newFixedThreadPool(countToValidate);
-            CountDownLatch countDownLatch = new CountDownLatch(1);
+            CountDownLatch countDownLatch = new CountDownLatch(4);
 
-            List<Callable> workers = new ArrayList<>();
+            List<Future<Boolean>> tasks = new ArrayList<>();
 
-            HorizontalThread horizontalThread = new HorizontalThread(mutant.getDna(), validLetters, countToValidate, countDownLatch);
-            VerticalThread verticalThread = new VerticalThread(mutant.getDna(), validLetters, countToValidate, countDownLatch);
-            LeftDiagnoalThread leftDiagnoalThread = new LeftDiagnoalThread(mutant.getDna(), validLetters, countToValidate, countDownLatch);
-            RightDiagonalThread rightDiagonalThread = new RightDiagonalThread(mutant.getDna(), validLetters, countToValidate, countDownLatch);
+            HorizontalThread horizontalThread = new HorizontalThread(mutant.getDna(), countToValidate, countDownLatch);
+            VerticalThread verticalThread = new VerticalThread(mutant.getDna(), countToValidate, countDownLatch);
+            LeftDiagnoalThread leftDiagnoalThread = new LeftDiagnoalThread(mutant.getDna(), countToValidate, countDownLatch);
+            RightDiagonalThread rightDiagonalThread = new RightDiagonalThread(mutant.getDna(), countToValidate, countDownLatch);
 
             Future<Boolean> horizontalResponse=executorService.submit(horizontalThread);
             Future<Boolean> verticalResponse=executorService.submit(verticalThread);
             Future<Boolean> leftDiagnoalResponse=executorService.submit(leftDiagnoalThread);
             Future<Boolean> rightDiagonalResponse=executorService.submit(rightDiagonalThread);
-
-
             countDownLatch.await();
 
+            tasks.add(horizontalResponse);
+            tasks.add(verticalResponse);
+            tasks.add(leftDiagnoalResponse);
+            tasks.add(rightDiagonalResponse);
+
+            Boolean isMutant=false;
             try {
-                result = horizontalResponse.get();
+                for(Future<Boolean> fut : tasks ){
+                    if(fut.get()){
+                        isMutant= true;
+                    }
+                }
+
             }catch (Exception ex){
                 throw ex;
+            }
+
+            result= isMutant;
+
+            Mutant probableMutant = new Mutant();
+            probableMutant.setDna(mutant.getDna().toString());
+            probableMutant.setHashCode(hashCode);
+            probableMutant.setMutant(isMutant);
+            mutantRepository.save(probableMutant);
+
+            if(!result){
+                throw new CustomForbiddenException("No es un mutante");
             }
 
         }else{

@@ -12,7 +12,6 @@ public class VerticalThread implements Validable, Callable<Boolean> {
 
 
     private List<String> dna;
-    private List<String> validLetters;
     private Integer countToValidate;
     private CountDownLatch countDownLatch;
 
@@ -41,6 +40,7 @@ public class VerticalThread implements Validable, Callable<Boolean> {
                     }
 
                     if(consecutives==countToValidate){
+                        countDownLatch.countDown();
                         return true;
                     }
 
@@ -50,7 +50,7 @@ public class VerticalThread implements Validable, Callable<Boolean> {
             countDownLatch.countDown();
             throw ex;
         }
-
+        countDownLatch.countDown();
         return false;
     }
 

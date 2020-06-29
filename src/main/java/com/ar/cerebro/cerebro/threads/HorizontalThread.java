@@ -7,23 +7,13 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 
+@AllArgsConstructor
 public class HorizontalThread implements Validable,Callable<Boolean> {
 
 
     private List<String> dna;
-    private List<String> validLetters;
     private Integer countToValidate;
     private CountDownLatch countDownLatch;
-
-
-    public HorizontalThread(List<String> dna, List<String> validLetters, Integer countToValidate, CountDownLatch countDownLatch){
-        super();
-        this.dna=dna;
-        this.validLetters=validLetters;
-        this.countToValidate=countToValidate;
-        this.countDownLatch=countDownLatch;
-    }
-
 
 
     @Override
@@ -62,6 +52,7 @@ public class HorizontalThread implements Validable,Callable<Boolean> {
             throw ex;
         }
 
+        countDownLatch.countDown();
         return false;
     }
 

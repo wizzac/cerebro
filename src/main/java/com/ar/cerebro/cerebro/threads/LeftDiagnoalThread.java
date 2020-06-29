@@ -14,7 +14,6 @@ public class LeftDiagnoalThread implements Validable,Callable<Boolean> {
 
 
     private List<String> dna;
-    private List<String> validLetters;
     private Integer countToValidate;
     private CountDownLatch countDownLatch;
 
@@ -29,27 +28,27 @@ public class LeftDiagnoalThread implements Validable,Callable<Boolean> {
 
         try{
             //tomar todos los elementos
-            for (int verticalHeight = 0; verticalHeight  < size ; verticalHeight++) { //lee el tamanio del array
+            for (int verticalHeight = size; verticalHeight  > 0  ; verticalHeight--) { //lee el tamaño del array
 
+                for(int hortizontalHeight = dna.get(verticalHeight-1).length()  ; hortizontalHeight >  0 ;hortizontalHeight--){ //mide el largo del string
 
-                for(int hortizontalHeight = 0 ; hortizontalHeight < dna.get(verticalHeight).length();hortizontalHeight++){ //mide el largo del string
-                    String[] row=dna.get(hortizontalHeight).split("");
+                    String[] row=dna.get(hortizontalHeight-1).split("");
 
-
-                    //validar si  tengo espacio para recorrer la diagnoal hacia la derecha de este elemento
-                    if(verticalHeight<=size-countToValidate ) {
-                        if( hortizontalHeight<=row.length - countToValidate ){
+                    //validar si  tengo espacio para recorrer la diagnoal hacia la izquierda de este elemento
+                    if(verticalHeight>=size-countToValidate ) {
+                        if( hortizontalHeight>=row.length - countToValidate ){
                             //teqngo espacio para recorrer esto
-                            current= row[hortizontalHeight];
+                            current= row[hortizontalHeight-1];
                             //for para recorrer la diagonal
                             for(int cant =0; cant < countToValidate; cant++){
 
                                 //esta es la fila donde esta el valor
-                                String[] diagnoalRow=dna.get(verticalHeight+cant).split("");
-                                String letter= diagnoalRow[hortizontalHeight+cant];
+                                String[] diagnoalRow=dna.get(verticalHeight-cant-1).split("");
+                                String letter= diagnoalRow[hortizontalHeight-cant-1];
                                 if(letter.equalsIgnoreCase(current)) {
                                     consecutives++;
                                     if(consecutives==countToValidate){
+                                        countDownLatch.countDown();
                                         return true;
                                     }
                                 }else{
@@ -66,6 +65,7 @@ public class LeftDiagnoalThread implements Validable,Callable<Boolean> {
             throw ex;
         }
 
+        countDownLatch.countDown();
         return false;
     }
 

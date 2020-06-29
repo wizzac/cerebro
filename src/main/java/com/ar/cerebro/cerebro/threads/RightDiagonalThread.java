@@ -14,7 +14,6 @@ public class RightDiagonalThread implements Validable,Callable<Boolean> {
 
 
     private List<String> dna;
-    private List<String> validLetters;
     private Integer countToValidate;
     private CountDownLatch countDownLatch;
 
@@ -47,6 +46,7 @@ public class RightDiagonalThread implements Validable,Callable<Boolean> {
                                 if(letter.equalsIgnoreCase(current)) {
                                     consecutives++;
                                     if(consecutives==countToValidate){
+                                        countDownLatch.countDown();
                                         return true;
                                     }
                                 }else{
@@ -63,6 +63,7 @@ public class RightDiagonalThread implements Validable,Callable<Boolean> {
             throw ex;
         }
 
+        countDownLatch.countDown();
         return false;
     }
 

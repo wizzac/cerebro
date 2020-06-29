@@ -5,9 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 @Repository
+
 public interface MutantRepository extends JpaRepository<Mutant,Integer> {
 
 
@@ -15,5 +15,12 @@ public interface MutantRepository extends JpaRepository<Mutant,Integer> {
             "from Mutant m " +
             "where m.hashCode = :hash")
     Mutant getByHashCode(@Param("hash")Integer hash);
+
+
+    @Query(value = "select count(id) from mutant  where is_mutant = TRUE ",nativeQuery = true)
+    Integer findMutantCount();
+
+    @Query(value="select count(id) from mutant  ",nativeQuery = true)
+    Integer findTotalCount();
 
 }
