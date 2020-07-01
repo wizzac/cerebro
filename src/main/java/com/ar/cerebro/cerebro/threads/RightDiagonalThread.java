@@ -21,8 +21,6 @@ public class RightDiagonalThread implements Validable,Callable<Boolean> {
     public boolean validate() {
 
         Integer size=dna.size();
-
-
         int consecutives=0;
         String current="";
         try{

@@ -1,6 +1,7 @@
 package com.ar.cerebro.cerebro.security;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -13,5 +14,6 @@ public class CustomForbiddenException extends RuntimeException{
     public CustomForbiddenException(String message) {
         super(message);
     }
+
 
 }

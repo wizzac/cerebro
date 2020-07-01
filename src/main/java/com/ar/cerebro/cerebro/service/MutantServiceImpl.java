@@ -10,7 +10,10 @@ import com.ar.cerebro.cerebro.threads.LeftDiagnoalThread;
 import com.ar.cerebro.cerebro.threads.RightDiagonalThread;
 import com.ar.cerebro.cerebro.threads.VerticalThread;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import lombok.Synchronized;
+import org.hibernate.annotations.Synchronize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -31,7 +34,6 @@ public class MutantServiceImpl implements MutantService {
 
     @Override
     public boolean isMutant(MutantDto mutant) throws Exception {
-
 
         Config letters = configService.getConfigByCode("VALID_LETTERS");
         Config countToValidateConfig=configService.getConfigByCode("VALIDATE_COUNT");
@@ -64,12 +66,13 @@ public class MutantServiceImpl implements MutantService {
             Future<Boolean> verticalResponse=executorService.submit(verticalThread);
             Future<Boolean> leftDiagnoalResponse=executorService.submit(leftDiagnoalThread);
             Future<Boolean> rightDiagonalResponse=executorService.submit(rightDiagonalThread);
-            countDownLatch.await();
 
             tasks.add(horizontalResponse);
             tasks.add(verticalResponse);
             tasks.add(leftDiagnoalResponse);
             tasks.add(rightDiagonalResponse);
+
+            countDownLatch.await();
 
             Boolean isMutant=false;
             try {
@@ -78,7 +81,7 @@ public class MutantServiceImpl implements MutantService {
                         isMutant= true;
                     }
                 }
-
+            executorService.shutdown();
             }catch (Exception ex){
                 throw ex;
             }
@@ -89,14 +92,15 @@ public class MutantServiceImpl implements MutantService {
             probableMutant.setDna(mutant.getDna().toString());
             probableMutant.setHashCode(hashCode);
             probableMutant.setMutant(isMutant);
-            mutantRepository.save(probableMutant);
 
-            if(!result){
-                throw new CustomForbiddenException("No es un mutante");
-            }
+          validateAndInsert(probableMutant,hashCode);
 
         }else{
             result= duplicate.isMutant();
+        }
+
+        if(!result){
+            throw new CustomForbiddenException("No es un mutante");
         }
         return result;
     }
@@ -123,7 +127,7 @@ public class MutantServiceImpl implements MutantService {
                 if(x!=null) {
                     for (int i = 0; i < x.length(); i++) {
                         String[] row = x.split("");
-                        if (!validLetters.contains(row[i])) {
+                        if (!validLetters.contains(row[i].toUpperCase())) {
                             throw new CustomForbiddenException("Esta cadena de adn es demasiado mutante");
                         }
                     }
@@ -134,10 +138,15 @@ public class MutantServiceImpl implements MutantService {
         });
 
 
-
-
     }
 
+    @Synchronized
+    private void validateAndInsert(Mutant mutant, Integer hashCode){
+        Mutant duplicate= mutantRepository.getByHashCode(hashCode);
+        if(duplicate == null) {
+            mutantRepository.save(mutant);
+        }
+    }
 
 
 }

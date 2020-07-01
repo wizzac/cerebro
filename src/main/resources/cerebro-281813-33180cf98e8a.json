@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "cerebro-281813",
+  "private_key_id": "33180cf98e8a850f041cc3278e1fc23b2b8c8e0b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCWdTeFGTS7qHZP\nyyJvJatReeiguUOIH8/yW0bgEH2ai/hJO+uBVecWjeLy90iwZPX9l193CS4X0DNT\nn6yYeEzENEwGPvNikzUws625RRECET4RphGUM8QFPysJiHhnHSKNlxf+wgiW/pTy\nHufySFCEZciZKai7ITJhCKgHOM4gPqpIbugyf+JKRBqILggYhdKT05FeX1WHkmrA\nbZ/Kfgpqup4w7bPknwzw8LgHbO6D99PPb+4+tTSh6scpwrgpt2DZW8+mJFD4zPwE\nLxGET2/gOiGpuzyfppdKLDa/4iFME2dOe8xli1LC2j927u17wnufOnxMMu4GLmeE\nUkzgKJL5AgMBAAECgf8Phoj0HbsTTOQ916L1/9fDJeabWdgIyT+WrVSNn9CrjJtS\nSJyZ/ANHOzJFYBRgH2BC4BvkbKNqUab6OhUqppSaqnWDL3vDRZgiLmhUIIxgv5Fo\nFiWPkB0/bVqY4Tw2EmDpEMOpG4dHYtMmfjSbtlqYpD15kJLuEb7hGcOSUIpJ9ATr\nmUDBerp1dcCbiuLlayxxT8I0VOvTGSfIYu8cWTmkkgGzr9JI0QP4zSBfB1Ro7GSF\n2NCR4ADQsLtDzbhQmF1YMT3j7TKpADg3pKL4InUacAMOarQu1cGIVW3TZU1kZ/y/\ncfYImDFpwTkaewrsSKlAg2W/P623cN/tnfg9M50CgYEAy6Ix/inq2ygi2/8AkeL7\nhuESnfweWYKnuHoRhYYi9kAeYFf/5qykRKtYeltH10/FPFSjGmNSGqsUZYR7Tj+7\nWqZIr2CGHVHxSTougWIk8dp+uumrLO2zaCuM0pU8Vi/D3XtIUCNCrF/JvQ08pGkn\n4aUhgJjCBagL7+/4br76r8UCgYEAvSZOnerfemgtu9y62IT1BsizsdDSvr54Nw/Y\nylg6wEM0OzWKPo6rKABNzI5ghNJzfvdETptdjGlAhzpW544Y+Q4ujhubu0p79IKm\nuQm7wfnUII0Rk/pBTXnRBo7esoQU8h/EcFn47WElzUacriU+h9zzMbVBLIozWVpJ\nFz8DtaUCgYBA19w9iBGOSgCXt2LyEapwr9kiz7bGYBGSb+SGdUlKyu4hVcRaKx1/\n9GQPSmPdDzzKUlVBwODTNykejopJR4gcfJjmp8DtMzu3SrymXJ9RGHeEg4YLn4Gi\nqUOFhxoYg8tGCszjH+dKRpJSDhYCcK3Pb6r0bTBTZsiuVebxNQVU1QKBgQCqFul5\nPj0qAManeY0XqTABordcPhFU70iBEyH6iy6Bt60fVTz0liy5MtTDDoEiz3CGiuoE\n2ddcrUUWlVKStQgl5ifdKFx5JjijHl24ZVVO0E592v0kmVThy5o4kH8X/ogrVn+6\nHF4pcEOi/U1lmB5L5FdYqsppt/kG75ZsbgDy9QKBgCzGaV48Z9TXq6orlPzFlxfm\ncW0W2YxMu2N+XG09NHQXDc6JYCjJOxyGAHuZJxvfYMZR2kDGHBAu+56dKaeLXaJR\n+rjjJh7/+vTX6jsq4hW3PzjILPLU6F/DJ+s/DpfQ8WehwS7vVhCH88kWgJH+dh9M\no/cx7jF3soKrbOrchl6m\n-----END PRIVATE KEY-----\n",
+  "client_email": "cerebro-281813@appspot.gserviceaccount.com",
+  "client_id": "111403197519995514346",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cerebro-281813%40appspot.gserviceaccount.com"
+}
