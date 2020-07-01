@@ -54,7 +54,6 @@ public class MutantServiceImpl implements MutantService {
 
             ExecutorService executorService = Executors.newFixedThreadPool(countToValidate);
             CountDownLatch countDownLatch = new CountDownLatch(4);
-
             List<Future<Boolean>> tasks = new ArrayList<>();
 
             HorizontalThread horizontalThread = new HorizontalThread(mutant.getDna(), countToValidate, countDownLatch);

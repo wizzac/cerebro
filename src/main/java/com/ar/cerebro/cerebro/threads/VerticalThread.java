@@ -47,10 +47,10 @@ public class VerticalThread implements Validable, Callable<Boolean> {
                 }
             };
         }catch (Exception ex){
-            countDownLatch.countDown();
             throw ex;
+        }finally {
+            countDownLatch.countDown();
         }
-        countDownLatch.countDown();
         return false;
     }
 
