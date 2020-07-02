@@ -11,7 +11,7 @@
 	<groupId>com.ar.cerebro</groupId>
 	<artifactId>cerebro</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>cerebro</name>
 	<description>Cerebro proyect to find mutantas</description>
 
@@ -130,6 +130,7 @@
 	<build>
 
 		<plugins>
+
 			<!--			<plugin>-->
 			<!--				<groupId>com.google.cloud.tools</groupId>-->
 			<!--				<artifactId>appengine-maven-plugin</artifactId>-->
@@ -139,8 +140,20 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-		</plugins>
+
+				<plugin>
+					<groupId>com.heroku.sdk</groupId>
+					<artifactId>heroku-maven-plugin</artifactId>
+					<configuration>
+						<processTypes>
+							<web>java $JAVA_OPTS -cp target/classes:target/dependency/* Main</web>
+						</processTypes>
+					</configuration>
+				</plugin>
+			</plugins>
+
 	</build>
+
 
 	<!--	<profiles>-->
 	<!--		<profile>-->
