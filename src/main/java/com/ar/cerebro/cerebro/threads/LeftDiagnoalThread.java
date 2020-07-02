@@ -29,7 +29,7 @@ public class LeftDiagnoalThread implements Validable,Callable<Boolean> {
         try{
             //tomar todos los elementos
             for (int verticalHeight = 0; verticalHeight  <= size-countToValidate  ; verticalHeight++) { //lee el tamaño del array
-                for(int hortizontalHeight = dna.get(verticalHeight).length()  ; hortizontalHeight >  0 ;hortizontalHeight--){ //mide el largo del string
+                for(int hortizontalHeight = dna.get(verticalHeight).length(); hortizontalHeight > size; hortizontalHeight--){ //mide el largo del string
                     String[] row=dna.get(verticalHeight).split("");
                     //validar si  tengo espacio para recorrer la diagnoal hacia la izquierda de este elemento
                     if(verticalHeight>=size-countToValidate ) {

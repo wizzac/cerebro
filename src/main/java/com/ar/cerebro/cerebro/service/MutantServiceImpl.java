@@ -111,24 +111,22 @@ public class MutantServiceImpl implements MutantService {
             throw new CustomForbiddenException("El adn no puede ser null");
         }
 
-
         if(mutant.getDna().size() < countToValidate){
             throw new CustomForbiddenException("No hay suficiente adn para validar");
         }
 
         mutant.getDna().forEach(x ->{
+            if (x==null){
+                throw new CustomForbiddenException("un elemento del adn no puede ser null");
+            }
             if(x.length() != mutant.getDna().size()){
                 throw new CustomForbiddenException("El patron de adn no es cuadrado");
             }else{
-                if(x!=null) {
-                    for (int i = 0; i < x.length(); i++) {
-                        String[] row = x.split("");
-                        if (!validLetters.contains(row[i].toUpperCase())) {
-                            throw new CustomForbiddenException("Esta cadena de adn es demasiado mutante");
-                        }
+                for (int i = 0; i < x.length(); i++) {
+                    String[] row = x.split("");
+                    if (!validLetters.contains(row[i].toUpperCase())) {
+                        throw new CustomForbiddenException("Esta cadena de adn es demasiado mutante");
                     }
-                }else{
-                    throw new CustomForbiddenException("El adn no puede ser null");
                 }
             }
         });
@@ -143,6 +141,5 @@ public class MutantServiceImpl implements MutantService {
             mutantRepository.save(mutant);
         }
     }
-
 
 }
