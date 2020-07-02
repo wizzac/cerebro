@@ -9,14 +9,14 @@ humano es mutante basándose en su secuencia de ADN.
 ## Uso: 
 	La Applicacion cuenta con 2 endpoint principalmente:
 
-##POST:
+## POST:
 
 ```
 /mutant/
 ```
 Se envia un json para validar si el adn es mutante o no, en caso de serlo responde con un codigo 200 ok, en caso contrario retornara un error 403.
 
-##Ejemplo
+## Ejemplo
 ```
 {
 	"dna":["acgt","aatc","atag","aggg"]
@@ -24,14 +24,14 @@ Se envia un json para validar si el adn es mutante o no, en caso de serlo respon
 ```
 
 
-##GET:
+## GET:
 
 ```
 /Stats/
 ```
 Una peticion get para obtene restadisticas de los mutantes evaluado
 
-##Ejemplo
+## Ejemplo
 ```
 {
  “count_mutant_dna”:40,
@@ -60,7 +60,7 @@ Esta configuracion especifica la cantidad de letras en secuencia para validar un
 
 
 
-##Postman:
+## Postman:
 
 Es posible obtener documentacion y ejemplo de llamadas utilizando el siguiente [Link](https://documenter.getpostman.com/view/10852748/T17FB94s)
 
