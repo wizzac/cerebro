@@ -9,11 +9,8 @@ import com.ar.cerebro.cerebro.threads.HorizontalThread;
 import com.ar.cerebro.cerebro.threads.LeftDiagnoalThread;
 import com.ar.cerebro.cerebro.threads.RightDiagonalThread;
 import com.ar.cerebro.cerebro.threads.VerticalThread;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Synchronized;
-import org.hibernate.annotations.Synchronize;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
